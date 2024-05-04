@@ -1,0 +1,36 @@
+# model config
+# embedding_size: 64
+# dataset config
+field_separator: "\t" #Specify the delimiter for the dataset field
+seq_separator: " " #Specify the delimiter in the token_seq or float_seq fields of the dataset
+USER_ID_FIELD: session_id #Specify User ID Domain
+ITEM_ID_FIELD: item_id #Specify item ID field
+RATING_FIELD: count #Specify the scoring rate field
+TIME_FIELD: timestamp #Specify time domain
+NEG_PREFIX: neg_ #Specify negative sampling prefix
+LABEL_FIELD: label #Specify label field
+ITEM_LIST_LENGTH_FIELD: item_length #Specify sequence length field
+LIST_SUFFIX: _list #Specify sequence prefix
+MAX_ITEM_LIST_LENGTH: 50 #Specify maximum sequence length
+POSITION_FIELD: position_id #Specify the generated sequence position ID
+#Specify which file to read which columns from. Here, we read the user_id, item_id, rating, timestamp columns from ml-1m. inter, and so on
+load_col:
+    inter: [session_id, item_id, count, timestamp]
+
+# training settings
+epochs: 100 #训练的最大轮数
+train_batch_size: 2048 #batch_size for training
+learner: adam #The pytorch built-in optimizer used
+learning_rate: 0.001
+training_neg_sample_num: 0
+train_neg_sample_args: null #When the loss function is CE, this parameter must be null or~
+eval_step: 1 #The number of evaluations done after each training session
+stopping_step: 10 #Control the number of steps for training convergence.
+
+# evalution settings
+eval_setting: TO_LS,full #Sort the data by time, set a set of partitioning methods for the dataset, and use full sorting
+metrics: ["Recall", "MRR","NDCG","Hit","Precision"] #Evaluation criteria
+topk: [5,10,20,50,100] #How many are recommended
+valid_metric: MRR@5 #the criteria for stopping training early
+eval_batch_size: 4096 #evalution's batch_size
+
