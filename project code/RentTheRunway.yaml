@@ -1,0 +1,33 @@
+# model config
+# embedding_size: 64
+# dataset config
+field_separator: "\t"
+seq_separator: " "
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+RATING_FIELD: rating
+TIME_FIELD: timestamp
+NEG_PREFIX: neg_
+LABEL_FIELD: label
+ITEM_LIST_LENGTH_FIELD: item_length
+LIST_SUFFIX: _list
+MAX_ITEM_LIST_LENGTH: 50
+POSITION_FIELD: position_id
+
+load_col:
+    inter: [user_id, item_id, rating, timestamp]
+# training settings
+epochs: 100
+train_batch_size: 4096
+learner: adam
+learning_rate: 0.001
+training_neg_sample_num: 0
+train_neg_sample_args: null
+eval_step: 1
+stopping_step: 10
+# evalution settings
+eval_setting: TO_LS,full
+metrics: ["Recall", "MRR","NDCG","Hit","Precision"]
+topk: [5,10,20,50,100]
+valid_metric: MRR@10
+eval_batch_size: 4096
